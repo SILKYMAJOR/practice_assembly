@@ -40,9 +40,7 @@ _start:
     test rax, rax
     js _error_write
 
-    mov rax, 0x3c
-    xor rdi, 0x00
-    syscall
+    jmp _exit 
 
 _error_open:
     mov rax, 0x01 ;write
@@ -51,9 +49,7 @@ _error_open:
     mov rdx, 0x0d
     syscall
 
-    mov rax, 0x3c
-    mov rdi, 0x00
-    syscall
+    jmp _exit 
 
 _error_read:
     mov rax, 0x01 ;write
@@ -62,9 +58,7 @@ _error_read:
     mov rdx, 0x0d
     syscall
 
-    mov rax, 0x3c
-    mov rdi, 0x00
-    syscall
+    jmp _exit 
  
 _error_write:
     mov rax, 0x01 ;write
@@ -73,7 +67,9 @@ _error_write:
     mov rdx, 0x0e
     syscall
 
+    jmp _exit 
+
+_exit:
     mov rax, 0x3c
     mov rdi, 0x00
     syscall
-
