@@ -23,6 +23,7 @@ _start:
     js _error_open
     
     mov rdi, rax
+    push rax
     mov rax, 0x00 ;read
     mov rsi, buffer
     mov rdx, len
@@ -40,7 +41,7 @@ _start:
     test rax, rax
     js _error_write
 
-    jmp _exit 
+    jmp _close
 
 _error_open:
     mov rax, 0x01 ;write
@@ -58,7 +59,7 @@ _error_read:
     mov rdx, 0x0d
     syscall
 
-    jmp _exit 
+    jmp _close
  
 _error_write:
     mov rax, 0x01 ;write
@@ -67,7 +68,14 @@ _error_write:
     mov rdx, 0x0e
     syscall
 
-    jmp _exit 
+    jmp _close 
+
+_close:
+    mov rax, 0x03 ;close
+    pop rdi       ;fd
+    syscall
+
+    jmp _exit
 
 _exit:
     mov rax, 0x3c
