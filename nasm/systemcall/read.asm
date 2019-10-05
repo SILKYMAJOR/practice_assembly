@@ -19,8 +19,8 @@ _start:
     mov rsi, 0x00 ;O_RDONLY
     syscall
     
-    cmp rax,0 
-    jl _error_open
+    test rax, rax 
+    js _error_open
     
     mov rdi, rax
     mov rax, 0x00 ;read
@@ -28,8 +28,8 @@ _start:
     mov rdx, len
     syscall
 
-    cmp rax, 0
-    jl _error_read
+    test rax, rax
+    js _error_read
 
     mov rax, 0x01 ;write
     mov rdi, 0x01 ;stdout
@@ -37,8 +37,8 @@ _start:
     mov rdx, len
     syscall
 
-    cmp rax, 0
-    jl _error_write
+    test rax, rax
+    js _error_write
 
     mov rax, 0x3c
     xor rdi, 0x00
